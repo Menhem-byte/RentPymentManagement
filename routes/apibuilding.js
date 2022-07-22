@@ -1,18 +1,16 @@
-const express = require("express")
-const dbrenter= require('../db/Renter')
-const router= express.Router();
+const express=require('express')
+const dbBuilding=require('../db/building')
+const router = express.Router()
 
 
 /************************************************************
  *       get method
  ************************************************************/
-
-router.route("/renter").get(async(req,res)=>{
-    const name=  (req.query.name)
+ router.route("/building").get(async(req,res)=>{
+    const Id=  (req.query.Id)
    
-
-    if(name){
-        const result=await dbrenter.renterName(name)
+    if(Id){
+        const result=await dbBuilding.building(Id)
         if(result){
             res.status(200).send(result);
         }
@@ -22,7 +20,7 @@ router.route("/renter").get(async(req,res)=>{
     }
     else {
 
-        const result=await dbrenter.renter()
+        const result=await dbBuilding.buildings()
         if(result){
             res.status(200).send(result);
         }
@@ -34,20 +32,22 @@ router.route("/renter").get(async(req,res)=>{
 })
 
 
-
 /************************************************************
  *       Post method
  ************************************************************/
-router.route("/insertRenter").post(async(req,res)=>{
-    dbrenter.insertRenter(req.body).then(result =>{
-        let resultObj={rowsaffected:result}
-        res.status(200).send(resultObj)
-    })
-    .catch(error =>{
-        let errorObj={message:error}
-        res.status(400).send(errorObj)
-    })
-})
+ router.route('/insertBuilding').post(async(req,res)=>{
+   dbBuilding.insertBuiding(req.body)
+   .then(result=>{
+    let resultObj={rowsaffected:result}
+    res.status(200).send(resultObj)
+      
+   }).catch(error =>{
+    let errorObj={message:error}
+    res.status(400).send(errorObj)
 
+   })
 
-module.exports=router
+ })
+
+ module.exports=router
+

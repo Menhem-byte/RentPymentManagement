@@ -31,7 +31,7 @@ async function renterName(name) {
     const result=await knex.select(
         '*'
     ).from('Renters as R')
-    .where('R.Name','=',name)
+    .where('R.Firstname','=',name)
     if(result.length){
         resolve(result)
     }
