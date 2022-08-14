@@ -6,7 +6,9 @@ function RentersPage() {
   return (
     <>
      <Renters/>
-  <button onClick={()=>{navigate('/')}}>Return to Home page</button></>
+     <button onClick={()=>{navigate('/')}}>Return to Home page</button>
+  
+  </>
  
   )
 }

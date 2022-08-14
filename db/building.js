@@ -33,8 +33,8 @@ async function building(building_Id){
              '*'
           ).from('building as B')
           .where('B.Id','=',building_Id)
-          if(building.insertbuilding){
-            resolve(building)
+          if(building.length){
+            resolve(building[0])
           }
           else{
             resolve('no records founds')
