@@ -39,11 +39,12 @@ app.use((req,res,next)=>{
 const renterRouter=require('../routes/apirenter')
 const buildingRouter=require('../routes/apibuilding')
 const appartmentsRouter=require('../routes/apiappartment')
-
+const renterAppartmentRouter=require('../routes/apirenterAppartment')
 //app use which routes
 app.use("/renter",renterRouter)
 app.use("/building",buildingRouter)
 app.use("/appartments",appartmentsRouter)
+app.use("/renterappartment",renterAppartmentRouter)
 app.set("etag",false);
 process.on("uncaughtException",(err,origin)=>{
     process.exit(1)
