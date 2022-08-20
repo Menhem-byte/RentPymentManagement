@@ -69,10 +69,30 @@ else{
 }
 }
 
+async function insertRenterAppartment(data){
+    console.log(data)
+    try{
+      let insertRecord=await insertupdatedelete.insert('RenterAppartment',data)
+      return(insertRecord)
+    }catch(err){
+        console.log(err)
+    }
+    }
 
+ async function updateRenterAppartment(data){
+    console.log('here we go')
+        try{
+          let insertRecord=await insertupdatedelete.update('RenterAppartment','RenterId',data)
+          return(insertRecord)
+        }catch(err){
+            console.log(err)
+        }
+        }
 
 module.exports={
     getAllRenterAppartments:getAllRenterAppartments,
-    getRenterAppartment:getRenterAppartment
+    getRenterAppartment:getRenterAppartment,
+    insertRenterAppartment:insertRenterAppartment,
+    updateRenterAppartment:updateRenterAppartment
 }
 

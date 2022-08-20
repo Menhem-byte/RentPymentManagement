@@ -14,7 +14,8 @@ async function  appartments(building_Id){
             'A.AppNumber',
             'A.Description',
             'A.Image',
-             'A.BuildingId'
+            'A.BuildingId',
+            'B.name',
           ).from('Appartment AS A')
           .join('Building as B','B.Id','A.buildingId')
           .where('A.buildingId','=',building_Id)
@@ -40,9 +41,10 @@ async function appartment(data){
     try{
    
      return new Promise(async(resolve,reject)=>{
+       
         let getBuilding= await building.building(data.BuildingId)
-      
-        if(getBuilding.length){
+      console.log(getBuilding)
+        if(getBuilding){
             let appartment =await knex.select(
               '*'
             ).from('Appartment as A')

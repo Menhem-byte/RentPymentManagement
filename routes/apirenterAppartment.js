@@ -35,5 +35,34 @@ const router=express.Router()
 
    
 })
+/************************************************************
+ *       Post method
+ ************************************************************/
+ router.route("/insertRenterAppartment").post(async(req,res)=>{
+ 
+  dbRenterAppartment.insertRenterAppartment(req.body).then(result =>{
+      let resultObj={rowsaffected:result}
+      res.status(200).send(resultObj)
+  })
+  .catch(error =>{
+      let errorObj={message:error}
+      res.status(400).send(errorObj)
+  })
+})
+/************************************************************
+ *       Put method
+ ************************************************************/
+router.route("/updateRenterAppartment").put(async(req,res)=>{
+ 
+  dbRenterAppartment.updateRenterAppartment(req.body).then(result =>{
+      let resultObj={rowsaffected:result}
+      res.status(200).send(resultObj)
+  })
+  .catch(error =>{
+      let errorObj={message:error}
+      res.status(400).send(errorObj)
+  })
+})
+
 
 module.exports=router

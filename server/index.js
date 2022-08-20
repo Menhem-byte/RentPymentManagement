@@ -20,6 +20,7 @@ const corsOptions={
         "http://localhost:3001",
         "http://localhost:3002",
         "http://localhost:3006",
+        "http://192.168.0.21:3006"
     ],
     Credential:true,
     authenticate:true,
