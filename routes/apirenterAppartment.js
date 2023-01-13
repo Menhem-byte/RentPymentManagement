@@ -39,7 +39,7 @@ const router=express.Router()
  *       Post method
  ************************************************************/
  router.route("/insertRenterAppartment").post(async(req,res)=>{
- 
+ console.log(req.body)
   dbRenterAppartment.insertRenterAppartment(req.body).then(result =>{
       let resultObj={rowsaffected:result}
       res.status(200).send(resultObj)

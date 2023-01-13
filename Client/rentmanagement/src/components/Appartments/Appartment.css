@@ -106,6 +106,14 @@
     line-height: 24px;
   }
   
+  .dialogContent{
+    color: #1f98f4;
+    width:max-content;
+    height: 500px;
+    width:500px;
+    display: flex;
+    justify-content: center;
+  }
   @media only screen and (min-width: 1200px) {
     .content__blog__container {
       width: 84%;

@@ -39,7 +39,8 @@ router.route("/renter").get(async(req,res)=>{
  *       Post method
  ************************************************************/
 router.route("/insertRenter").post(async(req,res)=>{
-    dbrenter.insertRenter(req.body).then(result =>{
+   
+    dbrenter.insertRenter(req.body.data).then(result =>{
         let resultObj={rowsaffected:result}
         res.status(200).send(resultObj)
     })

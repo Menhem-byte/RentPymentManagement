@@ -42,15 +42,18 @@ async function remove(tableName,columnName,data){
    }
 
 async function update(tableName,columnName,data){
+   let Id=data?.Id
+    delete data.Id
+  
     return new Promise(async(resolve,reject)=>{
-        await knex(tableName).where(columnName, data[columnName]).update(data).catch(function(err){
+        await knex(tableName).where(columnName, Id).update(data).catch(function(err){
             if(err)
             {   
-                console.log('Update fail with the record id: ' + data.Id + '\n'),
+                console.log('Update fail with the record id: ' + Id + '\n'),
                 console.log(err)  
             }
         })
-        resolve("one record is updated"+data.Id)
+        resolve("one record is updated"+Id)
     })
 }
 

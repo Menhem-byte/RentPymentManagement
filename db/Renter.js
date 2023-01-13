@@ -47,8 +47,10 @@ async function renterName(name) {
 }
 
 async function insertRenter(data){
+  
 try{
   let insertRecord=await insertupdatedelete.insert('Renters',data)
+  console.log(insertRecord)
   return(insertRecord)
 }catch(err){
     console.log(err)

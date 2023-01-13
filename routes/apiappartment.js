@@ -53,6 +53,7 @@ router.route('/appartment').get(async(req,res)=>{
  ************************************************************/
 
 router.route('/insertAppartment').post(async(req,res)=>{
+  console.log(req.body)
   DBappartment.insertAppartment(req.body).then(result =>{
    
     res.status(200).send(result)

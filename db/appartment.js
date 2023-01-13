@@ -16,8 +16,14 @@ async function  appartments(building_Id){
             'A.Image',
             'A.BuildingId',
             'B.name',
+            'A.RentDate',
+            'A.LeaveDate',
+            'R.Firstname',
+            'R.Lastname',
+            'R.Id as renterId'
           ).from('Appartment AS A')
           .join('Building as B','B.Id','A.buildingId')
+          .join('Renters as R','R.Id','A.RenterId')
           .where('A.buildingId','=',building_Id)
 
 
@@ -72,10 +78,14 @@ async function appartment(data){
 
 //insert appartment according to the building Id
 async function  insertAppartment(data){
+
+    
+ 
+
    try{
     return new Promise(async(resolve,reject)=>{
         let getBuilding= await building.building(data.BuildingId)
-      
+       
         if(getBuilding.length){
             let conflict= await appartment(data)
            
@@ -102,18 +112,28 @@ async function  insertAppartment(data){
 
 //update appartment 
 async function  updateAppartment(data){
-
+    console.log(data)
+    let reqData={}
+    reqData["Note"]=data.data?.note
+    reqData["RenterId"]=data.data?.RenterId
+    reqData["RentDate"]=data.data?.startDate
+    reqData["LeaveDate"]=data.data?.leaveDate
+    let getId=await knex.select("Id").from("Appartment").where("AppNumber","=",data.data?.AppNum)
+    console.log(getId[0])
+    reqData["Id"]=getId[0]?.Id
     try{
      return new Promise(async(resolve,reject)=>{
-         let getBuilding= await building.building(data.BuildingId)
-         console.log(getBuilding)
-         if(getBuilding.length){
-           let insertAppartment= await insertupdatedelete.update('Appartment','Id',data)
+        //  let getBuilding= await building.building(data.data?.buildingId)
+        //  console.log(getBuilding)
+        //  if(getBuilding.length){
+            console.log(reqData)
+           let insertAppartment= await insertupdatedelete.update('Appartment','Id',reqData)
+           console.log(insertAppartment)
            resolve(insertAppartment)
-         }
-         else{
-             resolve('building is not exist add an Appartment to an existing building')
-         }
+        //  }
+        //  else{
+        //      resolve('building is not exist add an Appartment to an existing building')
+        //  }
      })
     }
     catch(err){

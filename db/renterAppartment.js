@@ -70,7 +70,7 @@ else{
 }
 
 async function insertRenterAppartment(data){
-    console.log(data)
+   
     try{
       let insertRecord=await insertupdatedelete.insert('RenterAppartment',data)
       return(insertRecord)
