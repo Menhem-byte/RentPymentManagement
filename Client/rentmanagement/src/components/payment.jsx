@@ -18,11 +18,14 @@ import Fab from '@mui/material/Fab';
 
 export default function renter(){
     const [open,setOpen] =useState(false)
-    const [address,setAddress]=useState()
-     const [firstname,setFirstName]=useState()
-    const [lastname,setLastName]=useState()
-    const [phone,setPhone]=useState()
-    const [email,setEmail]=useState()
+    const [MonthlyBilling,setMonthlyBilling]=useState()
+    const [RentPaid,setRentPaid]=useState()
+    const [DueDate,setDueDate]=useState()
+    const [PaidDate,setPaidDate]=useState()
+    const [AppartmentNumber,setAppartmentNumber]=useState()
+    const [RenterName,setRenterName]=useState()
+    const [TotalPaid,setTotalPaid]=useState()
+    const [Rest,setRest]=useState()
     const [active,setActive]=useState(false)
     const [formData,setFormData]=useState()
     const [formDataEdit,setFormDataEdit]=useState({})
@@ -44,21 +47,21 @@ setFormDataEdit(model)
     const handleClickOpen=()=>{
         setOpen(true)
     }
-    const changeAddress=(value)=>{
-    setAddress(value)
+    const changeMonthlyBilling=(value)=>{
+    setMonthlyBilling(value)
     }
-      const changeFirstName=(value)=>{
-        setFirstName(value)
-        console.log(firstname)
+      const changeRentPaid=(value)=>{
+        setRentPaid(value)
+        console.log(RentPaid)
             }
-            const changeLastName=(value)=>{
-                setLastName(value)
+            const changeDueDate=(value)=>{
+                setDueDate(value)
                     }
-                    const changePhone=(value)=>{
-                        setPhone(value)
+                    const changePaidDate=(value)=>{
+                        setPaidDate(value)
                             }
-                            const changeEmail=(value)=>{
-                                setEmail(value)
+                            const changeAppartmentNumber=(value)=>{
+                                setAppartmentNumber(value)
                                     }
 
                                     const isActive=(value)=>{
@@ -74,14 +77,14 @@ setFormDataEdit(model)
     useEffect(()=>{
         dataVerify()
         
-      },[email,firstname,lastname,phone,address,active])
+      },[AppartmentNumber,RentPaid,DueDate,PaidDate,MonthlyBilling,active])
     const dataVerify =(prev)=>{
        
        
 
       
         setFormData(()=>({
-            Firstname:firstname,Lastname:lastname,Phone:phone,Address:address,Email:email,isActive:active
+            RentPaid:RentPaid,DueDate:DueDate,PaidDate:PaidDate,MonthlyBilling:MonthlyBilling,AppartmentNumber:AppartmentNumber,isActive:active
         }))
        
        /*
@@ -113,14 +116,15 @@ setFormDataEdit(model)
      }
     const columns=[
         {field:'Id' ,headerName:'ID',width:90,  headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
-        {field:'Username' ,headerName:'User Name' ,editable:true, width:150 ,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
-        {field:'Firstname' ,headerName:'First Name' ,editable:true, width:150 ,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
-        {field:'Lastname' ,headerName:'Last Name' ,editable:true, width:150,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
-        {field:'ArearCode' ,headerName:'Area Code' ,editable:true, width:150,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
-        {field:'Phone' ,headerName:'Phone' , width:150,editable:true,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
-        {field:'Email' ,headerName:'Email' , width:300,editable:true,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
-        {field:'Address' ,headerName:'Address' , width:150,editable:true,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
-        {field:'isActive' ,headerName:'isActive' , width:150,editable:true,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value==true?cellValues.value='true':cellValues.value='false'}</div>)}},
+        {field:'AppartmentNumber' ,headerName:'AppartmentNumber' , width:300,editable:true,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
+        {field:'RenterName' ,headerName:'Renter Name' ,editable:true, width:150 ,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
+        {field:'MonthlyBilling' ,headerName:'MonthlyBilling' , width:150,editable:true,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
+        {field:'DueDate' ,headerName:'Due Date' ,editable:true, width:150,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
+        {field:'RentPaid' ,headerName:'Amount Paid' ,editable:true, width:150 ,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
+        {field:'PaidDate' ,headerName:'PaidDate' , width:150,editable:true,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
+        {field:'TotalPaid' ,headerName:'Total Paid' ,editable:true, width:150,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
+        {field:'Rest' ,headerName:'Amount Due' ,editable:true, width:150,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
+        // {field:'Rest' ,headerName:'Amount Due' , width:150,editable:true,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value==true?cellValues.value='true':cellValues.value='false'}</div>)}},
        ]
     const [renters,setRenter]=useState([]);
    
@@ -156,13 +160,13 @@ return(
         margin:5,
       }}
     >
-      <TextField fullWidth label="First Name " id="firstname" margin='normal' type='text' variant='outlined' onChange={(e)=>{changeFirstName(e.target.value)}}/>
+      <TextField fullWidth label="First Name " id="RentPaid" margin='normal' type='text' variant='outlined' onChange={(e)=>{changeRentPaid(e.target.value)}}/>
       <br />
       
-      <TextField fullWidth label="Last Name " id="firstname" margin='normal'  type='text' variant='outlined' onChange={(e)=>{changeLastName(e.target.value)}}/>
-      <TextField fullWidth label="Email" id="firstname" margin='normal' type='text' variant='outlined' onChange={(e)=>{changeEmail(e.target.value)}}/>
-      <TextField fullWidth label="Address" id="firstname" margin='normal' type='text' variant='outlined' onChange={(e)=>{changeAddress(e.target.value)}} />
-      <TextField fullWidth label="Phone " id="firstname" margin='normal'  type='text' variant='outlined' onChange={(e)=>{changePhone(e.target.value)}}/>
+      <TextField fullWidth label="Last Name " id="RentPaid" margin='normal'  type='text' variant='outlined' onChange={(e)=>{changeDueDate(e.target.value)}}/>
+      <TextField fullWidth label="AppartmentNumber" id="RentPaid" margin='normal' type='text' variant='outlined' onChange={(e)=>{changeAppartmentNumber(e.target.value)}}/>
+      <TextField fullWidth label="MonthlyBilling" id="RentPaid" margin='normal' type='text' variant='outlined' onChange={(e)=>{changeMonthlyBilling(e.target.value)}} />
+      <TextField fullWidth label="PaidDate " id="RentPaid" margin='normal'  type='text' variant='outlined' onChange={(e)=>{changePaidDate(e.target.value)}}/>
       <span>is Active <Checkbox  label= " isActive " id='isActive' onChange={(e)=>{isActive(e.target.checked)}} /></span>
       
     </Box>

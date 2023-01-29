@@ -1,7 +1,7 @@
 import React from 'react'
 import Payment from '../components/payment'
 import {useNavigate} from 'react-router-dom'
-function RentersPage() {
+function PaymentPage() {
     let navigate=useNavigate()
   return (
     <>
@@ -13,4 +13,4 @@ function RentersPage() {
   )
 }
 
-export default RentersPage
+export default PaymentPage
