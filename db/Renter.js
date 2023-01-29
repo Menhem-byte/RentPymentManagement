@@ -57,8 +57,33 @@ try{
 }
 }
 
+async function updateRenter(data,Id){
+   
+    let reqdata={}
+    let reqdata1=data[`${Id}`]
+    reqdata['Id']=Number(Id)
+    reqdata['Username']=reqdata1.Username.value
+    reqdata['Firstname']=reqdata1.Firstname.value
+    reqdata['Lastname']=reqdata1.Lastname.value
+    reqdata['ArearCode']=reqdata1.ArearCode.value
+    reqdata['Phone']=reqdata1.Phone.value
+    reqdata['Email']=reqdata1.Email.value
+    reqdata['Address']=reqdata1.Address.value
+    reqdata['isActive']=reqdata1.isActive.value
+    console.log(reqdata)
+  
+    try{
+      let insertRecord=await insertupdatedelete.update('Renters',"Id",reqdata)
+      console.log(insertRecord)
+      return(insertRecord)
+    }catch(err){
+        console.log(err)
+    }
+    }
+
 module.exports={
     renter:renter,
     renterName:renterName,
-    insertRenter:insertRenter
+    insertRenter:insertRenter,
+    updateRenter:updateRenter
 }

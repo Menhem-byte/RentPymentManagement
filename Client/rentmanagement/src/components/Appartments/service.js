@@ -49,3 +49,16 @@ export  const uploadImage = async(data) =>{
       console.log(error)
   }
 }
+
+
+export  const updateRenter = async(data) =>{
+
+  try{
+  const resp= await axios.post(`${APIURL}/renter/updateRenter`,{data})
+    
+    console.log(resp)
+  }
+  catch(error){
+      console.log(error)
+  }
+}

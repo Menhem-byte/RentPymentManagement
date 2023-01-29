@@ -42,6 +42,9 @@ async function remove(tableName,columnName,data){
    }
 
 async function update(tableName,columnName,data){
+    console.log(tableName)
+    console.log(columnName)
+    console.log(data)
    let Id=data?.Id
     delete data.Id
   

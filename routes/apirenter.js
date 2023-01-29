@@ -50,5 +50,18 @@ router.route("/insertRenter").post(async(req,res)=>{
     })
 })
 
+router.route("/updateRenter").post(async(req,res)=>{
+ 
+    let Id=Object.keys(req.body.data)[0]
+     dbrenter.updateRenter(req.body.data,Id).then(result =>{
+         let resultObj={rowsaffected:result}
+         res.status(200).send(resultObj)
+     })
+     .catch(error =>{
+         let errorObj={message:error}
+         res.status(400).send(errorObj)
+     })
+ })
+
 
 module.exports=router

@@ -41,7 +41,7 @@ useEffect(()=>{
      <Link to="/renters" onClick={closeMobileMenu} className='nav-links'> <FontAwesomeIcon icon={solid('users')} className='fab fa-typo3' /> renters</Link>
      </li>
      <li className='nav-item'>
-     <Link to="/renter" onClick={closeMobileMenu} className='nav-links'><FontAwesomeIcon icon={solid('user-tag')}  className='fab fa-typo3' />renter</Link>
+     <Link to="/payment" onClick={closeMobileMenu} className='nav-links'><FontAwesomeIcon icon={solid('user-tag')}  className='fab fa-typo3' />Payments</Link>
      </li>
     </ul>
 

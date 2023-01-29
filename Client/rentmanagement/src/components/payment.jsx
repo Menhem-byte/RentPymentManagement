@@ -176,7 +176,7 @@ return(
     <Button onClick={handleClose}>Add</Button>
 </DialogActions>
        </Dialog>
-    <Box sx={{height:400,width:'100%',  '& .super-app-theme--header': {
+    <Box sx={{height:700,width:'100%',  '& .super-app-theme--header': {
         backgroundColor: 'rgba(79,139,192,0.5)',
         fontSize:20,
         fontFamily:"Times New Roman",
@@ -187,7 +187,7 @@ return(
         rows={renters}
         getRowId={(row) => row.Id}
         columns ={columns}
-        pageSize={5}
+        pageSize={10}
         rowsPerPageOptions={[5]}
         checkboxSelection
         editMode='row'
