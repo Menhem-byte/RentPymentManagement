@@ -46,6 +46,8 @@ app.use("/renter",renterRouter)
 app.use("/building",buildingRouter)
 app.use("/appartments",appartmentsRouter)
 app.use("/renterappartment",renterAppartmentRouter)
+const fileUpload = require('express-fileupload')
+app.use(fileUpload())
 app.set("etag",false);
 process.on("uncaughtException",(err,origin)=>{
     process.exit(1)

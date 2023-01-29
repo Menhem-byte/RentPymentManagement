@@ -37,3 +37,15 @@ export  const insertAppartment = async(data) =>{
       console.log(error)
   }
 }
+
+export  const uploadImage = async(data) =>{
+
+  try{
+  const resp= await axios.post(`${APIURL}/appartments/upload`,data)
+    
+    console.log(resp)
+  }
+  catch(error){
+      console.log(error)
+  }
+}

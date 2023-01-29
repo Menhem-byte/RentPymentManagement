@@ -14,15 +14,19 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack'
-import {insertAppartment} from "../Appartments/service"
+import {insertAppartment,uploadImage} from "../Appartments/service"
 import TextField from '@mui/material/TextField';
 import { FormControl } from '@mui/material';
+import UploadImage from "./uploadImage"
+
 function BuildingAppartments() {
     const [open,setOpen] =useState(false)
     const [alert,setAlert]=useState(false)
+    const [passToParent,setPassToParent]=useState(null)
     const {id}=useParams()
+    // let formData = new FormData()
+
     const [inputs,setInputs]=useState({BuildingId:id,AppNumber:"",Description:""})
-   
     const [appartments,setAppartments]=useState([])
     const [building,setBuilding]=useState()
     const getAllAppartments=(async()=>{
@@ -44,6 +48,9 @@ function BuildingAppartments() {
     })
   })
 
+//  useEffect(()=>{
+// handleSubmit()
+//  },[passToParent])
 
     useEffect(()=>{
         getAllAppartments()
@@ -54,7 +61,7 @@ function BuildingAppartments() {
         setOpen(true)
     }
     const handleClose=()=>{
-        setInputs({AppNumber:"",Description:""})
+        setInputs({BuildingId:id,AppNumber:"",Description:""})
         setOpen(false)
     }
 
@@ -64,11 +71,31 @@ setInputs((prevState)=>({
 }))
     }
 
-    const handleSubmit=(e)=>{
-        e.preventDefault()
+    const handleSubmit=async(e)=>{
+       let insertImage={}
+         insertAppartment(inputs)
         setAlert(true)
-        insertAppartment(inputs)
-        console.log(inputs)
+        let reader = new FileReader()
+        reader.readAsDataURL(passToParent)
+        reader.onload=async()=>{
+            insertImage["Image"]=reader.result
+            insertImage["AppNum"]=inputs.AppNumber
+             uploadImage(insertImage)
+        }
+    
+    
+    
+      
+    //    let image=await onFileUpload()
+    //     inputs["file"]=image
+
+    //     console.log(inputs)
+         
+        
+    //    console.log(formData)
+     
+    //    
+        
         setTimeout(() => {
             setAlert(false);
                  }, 3000);
@@ -76,6 +103,11 @@ setInputs((prevState)=>({
        
     }
 
+    
+
+    const getFromChild=(data)=>{
+        setPassToParent(data)
+    }
 
  
   return (
@@ -127,14 +159,20 @@ setInputs((prevState)=>({
         margin:5,
       }}
     >
-<TextField fullWidth label="App Number" name="AppNumber" id="AppNumber" value={inputs.AppNumber} margin='normal' type='text' variant='outlined' onChange={handleChange}/>
+    <TextField fullWidth label="App Number" name="AppNumber" id="AppNumber" value={inputs.AppNumber} margin='normal' type='text' variant='outlined' onChange={handleChange}/>
       <br />
-      
+      <TextField fullWidth label="BuildingId" name="BuildingId" id="BuildingId" value={inputs.BuildingId} margin='normal' type='text' variant='outlined' onChange={handleChange}/>
       <TextField fullWidth label="Description" name="Description" value={inputs.Description} id="Description" margin='normal'  type='text' variant='outlined' onChange={handleChange} />
+    <UploadImage sendToParent={getFromChild}/>
      <Button type='submit'>Submit</Button>
-     <Button type='cancel' onClick={handleClose}>Cancel</Button>
+     <Button  onClick={handleClose}>Cancel</Button>
       </Box>
+    
 </form>
+
+
+
+
 </DialogContentText>
 </Dialog>
 

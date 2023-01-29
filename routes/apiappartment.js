@@ -1,6 +1,7 @@
 const express=require('express')
 const DBappartment=require('../db/appartment')
 const router=express.Router()
+const fileUpload = require('express-fileupload')
 
 
 /************************************************************
@@ -54,6 +55,7 @@ router.route('/appartment').get(async(req,res)=>{
 
 router.route('/insertAppartment').post(async(req,res)=>{
   console.log(req.body)
+  console.log("here")
   DBappartment.insertAppartment(req.body).then(result =>{
    
     res.status(200).send(result)
@@ -61,6 +63,28 @@ router.route('/insertAppartment').post(async(req,res)=>{
   .catch(err=>{
     res.status(400).send(err)
   })
+})
+
+router.route('/upload').post(async(req,res)=>{
+ 
+  
+ DBappartment.updateImageAppartment(req.body).then(result=>{
+  res.status(200).send(result)
+ }).catch(err=>{
+  res.status(400).send(err)
+ });
+  // if(!req.files || Object.keys(req.files).length ===0){
+  //   res.status(400).send("Nofiles were uploaded")
+  //   return;
+  // }
+  // console.log(req.files)
+  // DBappartment.insertAppartment(req.body).then(result =>{
+   
+  //   res.status(200).send(result)
+  // })
+  // .catch(err=>{
+  //   res.status(400).send(err)
+  // })
 })
 
 

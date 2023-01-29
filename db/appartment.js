@@ -79,18 +79,24 @@ async function appartment(data){
 //insert appartment according to the building Id
 async function  insertAppartment(data){
 
-    
- 
+
+ data=data.data
+ console.log(data)
+ data["RenterId"]=6 
+ data["RentDate"]="2022-11-26"
+ data["LeaveDate"]="2022-11-26"
+
 
    try{
     return new Promise(async(resolve,reject)=>{
         let getBuilding= await building.building(data.BuildingId)
-       
-        if(getBuilding.length){
+        console.log(getBuilding)
+        if(getBuilding){
             let conflict= await appartment(data)
            
             if(conflict.includes('no record found for appartment')){
                 let insertAppartment= await insertupdatedelete.insert('Appartment',data)
+                // updateAppartmentRenterToDefault(data?.AppNum);
                 resolve(insertAppartment)
             }
             else{
@@ -109,6 +115,36 @@ async function  insertAppartment(data){
     console.log(err)
    }
 }
+//just to update renter
+async function  updateAppartmentRenterToDefault(AppNum){
+    console.log(data)
+    let reqData={}
+  
+    reqData["RenterId"]=6
+    
+   
+    let getId=await knex.select("Id").from("Appartment").where("AppNumber","=",AppNum)
+    console.log(getId[0])
+    reqData["Id"]=getId[0]?.Id
+    try{
+     return new Promise(async(resolve,reject)=>{
+        //  let getBuilding= await building.building(data.data?.buildingId)
+        //  console.log(getBuilding)
+        //  if(getBuilding.length){
+            console.log(reqData)
+           let insertAppartment= await insertupdatedelete.update('Appartment','Id',reqData)
+           console.log("yelertgrhgrthrthrthrthrthrthrthhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+           resolve()
+        //  }
+        //  else{
+        //      resolve('building is not exist add an Appartment to an existing building')
+        //  }
+     })
+    }
+    catch(err){
+     console.log(err)
+    }
+ }
 
 //update appartment 
 async function  updateAppartment(data){
@@ -129,7 +165,35 @@ async function  updateAppartment(data){
             console.log(reqData)
            let insertAppartment= await insertupdatedelete.update('Appartment','Id',reqData)
            console.log(insertAppartment)
-           resolve(insertAppartment)
+           resolve()
+        //  }
+        //  else{
+        //      resolve('building is not exist add an Appartment to an existing building')
+        //  }
+     })
+    }
+    catch(err){
+     console.log(err)
+    }
+ }
+
+ async function  updateImageAppartment(data){
+    console.log('I am here')
+  let reqData={}
+    let getId=await knex.select("Id").from("Appartment").where("AppNumber","=",data?.AppNum)
+    console.log(getId[0])
+    reqData["Id"]=getId[0]?.Id
+    reqData["Image"]=data?.Image
+    console.log(reqData)
+    try{
+     return new Promise(async(resolve,reject)=>{
+        //  let getBuilding= await building.building(data.data?.buildingId)
+        //  console.log(getBuilding)
+        //  if(getBuilding.length){
+            console.log(reqData)
+           let insertAppartment= await insertupdatedelete.update('Appartment','Id',reqData)
+           console.log(insertAppartment)
+           resolve()
         //  }
         //  else{
         //      resolve('building is not exist add an Appartment to an existing building')
@@ -147,5 +211,6 @@ module.exports=
     appartments:appartments,
     insertAppartment:insertAppartment,
     updateAppartment:updateAppartment,
-    appartment:appartment
+    appartment:appartment,
+    updateImageAppartment:updateImageAppartment
 }
