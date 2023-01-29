@@ -86,7 +86,6 @@ async function  insertAppartment(data){
  data["RentDate"]="2022-11-26"
  data["LeaveDate"]="2022-11-26"
 
-
    try{
     return new Promise(async(resolve,reject)=>{
         let getBuilding= await building.building(data.BuildingId)
