@@ -67,9 +67,13 @@ setFormDataEdit(model)
                                             }
                             
     const handleClose=()=>{
-        data()
+        
         setOpen(false)
     }
+    const handleAdd=()=>{
+        data()
+      setOpen(false)
+  }
 
     useEffect(()=>{
         dataVerify()
@@ -173,7 +177,7 @@ return(
 
 <DialogActions>
     <Button onClick={handleClose}>Cancel</Button>
-    <Button onClick={handleClose}>Add</Button>
+    <Button onClick={handleAdd}>Add</Button>
 </DialogActions>
        </Dialog>
     <Box sx={{height:400,width:'100%',  '& .super-app-theme--header': {

@@ -41,11 +41,13 @@ const renterRouter=require('../routes/apirenter')
 const buildingRouter=require('../routes/apibuilding')
 const appartmentsRouter=require('../routes/apiappartment')
 const renterAppartmentRouter=require('../routes/apirenterAppartment')
+const payment=require('../routes/apipayment')
 //app use which routes
 app.use("/renter",renterRouter)
 app.use("/building",buildingRouter)
 app.use("/appartments",appartmentsRouter)
 app.use("/renterappartment",renterAppartmentRouter)
+app.use("/payment",payment)
 const fileUpload = require('express-fileupload')
 app.use(fileUpload())
 app.set("etag",false);

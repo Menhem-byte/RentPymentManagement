@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import axios from 'axios';
 import Box from '@mui/material/Box'
 import {DataGrid,GridColDef,GridValueGetterParams, useGridApiRef}  from '@mui/x-data-grid'
-import './renters.css'
+import './payment.css'
 import {insertRenter,updateRenter} from "../components/Appartments/service"
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
@@ -19,14 +19,14 @@ import Fab from '@mui/material/Fab';
 export default function renter(){
     const [open,setOpen] =useState(false)
     const [MonthlyBilling,setMonthlyBilling]=useState()
-    const [RentPaid,setRentPaid]=useState()
+    const [Paid,setPaid]=useState()
     const [DueDate,setDueDate]=useState()
     const [PaidDate,setPaidDate]=useState()
     const [AppartmentNumber,setAppartmentNumber]=useState()
-    const [RenterName,setRenterName]=useState()
+    const [RenterName,setPaymentName]=useState()
     const [TotalPaid,setTotalPaid]=useState()
     const [Rest,setRest]=useState()
-    const [active,setActive]=useState(false)
+    const [RentPaid,setRentPaid]=useState(false)
     const [formData,setFormData]=useState()
     const [formDataEdit,setFormDataEdit]=useState({})
 // useEffect(()=>{
@@ -50,9 +50,9 @@ setFormDataEdit(model)
     const changeMonthlyBilling=(value)=>{
     setMonthlyBilling(value)
     }
-      const changeRentPaid=(value)=>{
-        setRentPaid(value)
-        console.log(RentPaid)
+      const changePaid=(value)=>{
+        setPaid(value)
+        console.log(Paid)
             }
             const changeDueDate=(value)=>{
                 setDueDate(value)
@@ -64,12 +64,17 @@ setFormDataEdit(model)
                                 setAppartmentNumber(value)
                                     }
 
-                                    const isActive=(value)=>{
-                                     setActive(value)
+                                    const isRentPaid=(value)=>{
+                                     setRentPaid(value)
                                         
                                             }
                             
     const handleClose=()=>{
+        
+       setOpen(false)
+    }
+
+    const handleAdd=()=>{
         data()
         setOpen(false)
     }
@@ -77,14 +82,14 @@ setFormDataEdit(model)
     useEffect(()=>{
         dataVerify()
         
-      },[AppartmentNumber,RentPaid,DueDate,PaidDate,MonthlyBilling,active])
+      },[AppartmentNumber,Paid,DueDate,PaidDate,MonthlyBilling,RentPaid])
     const dataVerify =(prev)=>{
        
        
 
       
         setFormData(()=>({
-            RentPaid:RentPaid,DueDate:DueDate,PaidDate:PaidDate,MonthlyBilling:MonthlyBilling,AppartmentNumber:AppartmentNumber,isActive:active
+            Paid:Paid,DueDate:DueDate,PaidDate:PaidDate,MonthlyBilling:MonthlyBilling,AppartmentNumber:AppartmentNumber,isRentPaid:RentPaid
         }))
        
        /*
@@ -98,11 +103,6 @@ setFormDataEdit(model)
       */
      }
      const data =(prev)=>{
-       
-       
-
-      
-       
        insertRenter(formData)
        /*
         insertAppartmentRenter(formData)
@@ -120,25 +120,25 @@ setFormDataEdit(model)
         {field:'RenterName' ,headerName:'Renter Name' ,editable:true, width:150 ,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
         {field:'MonthlyBilling' ,headerName:'MonthlyBilling' , width:150,editable:true,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
         {field:'DueDate' ,headerName:'Due Date' ,editable:true, width:150,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
-        {field:'RentPaid' ,headerName:'Amount Paid' ,editable:true, width:150 ,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
+        {field:'Paid' ,headerName:'Amount Paid' ,editable:true, width:150 ,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
         {field:'PaidDate' ,headerName:'PaidDate' , width:150,editable:true,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
         {field:'TotalPaid' ,headerName:'Total Paid' ,editable:true, width:150,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
         {field:'Rest' ,headerName:'Amount Due' ,editable:true, width:150,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value}</div>)}},
-        // {field:'Rest' ,headerName:'Amount Due' , width:150,editable:true,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value==true?cellValues.value='true':cellValues.value='false'}</div>)}},
+        {field:'RentPaid' ,headerName:'Rent Paid' , width:150,editable:true,headerClassName: 'super-app-theme--header',renderCell:(cellValues)=>{return(<div style={{color:"black",fontSize:18}}>{cellValues.value==true?cellValues.value='true':cellValues.value='false'}</div>)}},
        ]
-    const [renters,setRenter]=useState([]);
+    const [payment,setPayment]=useState([]);
    
-    const getAllRenters=(async()=>{
-        const renterUrl="http://localhost:3002/renter/renter"
+    const getAllpayment=(async()=>{
+        const renterUrl="http://localhost:3002/payment/payment"
          await axios.get(renterUrl).then(async(response)=>{
-            setRenter(response.data)
+            setPayment(response.data)
            console.log(response.data)
         }).catch((err)=>{
             console.log(err)
         });
     })
     useEffect(()=>{
-      getAllRenters()
+      getAllpayment()
     },[])
 
     
@@ -160,14 +160,14 @@ return(
         margin:5,
       }}
     >
-      <TextField fullWidth label="First Name " id="RentPaid" margin='normal' type='text' variant='outlined' onChange={(e)=>{changeRentPaid(e.target.value)}}/>
+      <TextField fullWidth label="First Name " id="Paid" margin='normal' type='text' variant='outlined' onChange={(e)=>{changePaid(e.target.value)}}/>
       <br />
       
-      <TextField fullWidth label="Last Name " id="RentPaid" margin='normal'  type='text' variant='outlined' onChange={(e)=>{changeDueDate(e.target.value)}}/>
-      <TextField fullWidth label="AppartmentNumber" id="RentPaid" margin='normal' type='text' variant='outlined' onChange={(e)=>{changeAppartmentNumber(e.target.value)}}/>
-      <TextField fullWidth label="MonthlyBilling" id="RentPaid" margin='normal' type='text' variant='outlined' onChange={(e)=>{changeMonthlyBilling(e.target.value)}} />
-      <TextField fullWidth label="PaidDate " id="RentPaid" margin='normal'  type='text' variant='outlined' onChange={(e)=>{changePaidDate(e.target.value)}}/>
-      <span>is Active <Checkbox  label= " isActive " id='isActive' onChange={(e)=>{isActive(e.target.checked)}} /></span>
+      <TextField fullWidth label="Last Name " id="Paid" margin='normal'  type='text' variant='outlined' onChange={(e)=>{changeDueDate(e.target.value)}}/>
+      <TextField fullWidth label="AppartmentNumber" id="Paid" margin='normal' type='text' variant='outlined' onChange={(e)=>{changeAppartmentNumber(e.target.value)}}/>
+      <TextField fullWidth label="MonthlyBilling" id="Paid" margin='normal' type='text' variant='outlined' onChange={(e)=>{changeMonthlyBilling(e.target.value)}} />
+      <TextField fullWidth label="PaidDate " id="Paid" margin='normal'  type='text' variant='outlined' onChange={(e)=>{changePaidDate(e.target.value)}}/>
+      <span>is RentPaid <Checkbox  label= " isRentPaid " id='isRentPaid' onChange={(e)=>{isRentPaid(e.target.checked)}} /></span>
       
     </Box>
    
@@ -177,7 +177,7 @@ return(
 
 <DialogActions>
     <Button onClick={handleClose}>Cancel</Button>
-    <Button onClick={handleClose}>Add</Button>
+    <Button onClick={handleAdd}>Add</Button>
 </DialogActions>
        </Dialog>
     <Box sx={{height:700,width:'100%',  '& .super-app-theme--header': {
@@ -188,7 +188,7 @@ return(
       },}}>
         <DataGrid 
         sx={{backgroundColor: 'rgba(240, 248, 255, 0.7)'}}
-        rows={renters}
+        rows={payment}
         getRowId={(row) => row.Id}
         columns ={columns}
         pageSize={10}
