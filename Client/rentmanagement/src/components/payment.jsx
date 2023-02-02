@@ -8,35 +8,52 @@ import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
-
+import PaidRoundedIcon from '@mui/icons-material/PaidRounded';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Fab from '@mui/material/Fab';
+import { truncate } from 'lodash';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack'
 
 export default function renter(){
     const [open,setOpen] =useState(false)
+    const [alert,setAlert]=useState(false)
+    const [selectedRows, setSelectedRows] = useState();
     const [MonthlyBilling,setMonthlyBilling]=useState()
     const [Paid,setPaid]=useState()
     const [DueDate,setDueDate]=useState()
-    const [PaidDate,setPaidDate]=useState()
+    const [PaidDate,setPaidDate]=useState(selectedRows?.DueDate)
     const [AppartmentNumber,setAppartmentNumber]=useState()
     const [RenterName,setPaymentName]=useState()
     const [TotalPaid,setTotalPaid]=useState()
     const [Rest,setRest]=useState()
     const [RentPaid,setRentPaid]=useState(false)
     const [formData,setFormData]=useState()
+    const [disableButton,setDisableButton]=useState(true)
     const [formDataEdit,setFormDataEdit]=useState({})
+    const [alertMessage,setAlertMessage]=useState("")
+    const [severity,setSevirity]=useState("error")
+    
 // useEffect(()=>{
 //   EditRenter()
 // },[formDataEdit])
+
+    
 
     const EditRenter =(model)=>{
 console.log(model)
 setFormDataEdit(model)
     }
+    const selectRow =(row)=>{
+        console.log(row.row)
+       setSelectedRows(row.row)
+       setDisableButton(false)
+       
+            }
 
     const UpdateData=()=>{
       console.log("here")
@@ -82,14 +99,13 @@ setFormDataEdit(model)
     useEffect(()=>{
         dataVerify()
         
-      },[AppartmentNumber,Paid,DueDate,PaidDate,MonthlyBilling,RentPaid])
+      },[Paid,PaidDate])
     const dataVerify =(prev)=>{
        
        
-
       
         setFormData(()=>({
-            Paid:Paid,DueDate:DueDate,PaidDate:PaidDate,MonthlyBilling:MonthlyBilling,AppartmentNumber:AppartmentNumber,isRentPaid:RentPaid
+            Paid:Paid,PaidDate:PaidDate
         }))
        
        /*
@@ -103,7 +119,27 @@ setFormDataEdit(model)
       */
      }
      const data =(prev)=>{
-       insertRenter(formData)
+        console.log(selectedRows)
+        console.log(formData)
+
+        if(formData?.Paid && formData.PaidDate){
+            setSevirity("success")
+            setAlertMessage("your payment has been added succefully")
+            setAlert(true)
+        }else {
+            setSevirity("error")
+            setAlertMessage("you have to insert payment amount and payment date")
+            setAlert(true)
+        }
+       
+        
+
+        setTimeout(() => {
+            setAlert(false);
+                 }, 3000);
+      
+       
+    //    insertRenter(formData)
        /*
         insertAppartmentRenter(formData)
         .then((result)=>{
@@ -160,14 +196,25 @@ return(
         margin:5,
       }}
     >
-      <TextField fullWidth label="First Name " id="Paid" margin='normal' type='text' variant='outlined' onChange={(e)=>{changePaid(e.target.value)}}/>
+      <TextField fullWidth label="First Name " id="Paid" margin='normal' value={selectedRows?.RenterName} type='text' variant='outlined'/>
       <br />
+      <TextField fullWidth label="Appartment Number" id="Paid" margin='normal' type='text' value={selectedRows?.AppartmentNumber}  variant='outlined'/>
+      <TextField fullWidth label="Monthly Billing" id="Paid" margin='normal' type='text' value={selectedRows?.MonthlyBilling} variant='outlined'/>
+      <TextField fullWidth label="Payment Received"  id="Paid" margin='normal'  type='number' variant='outlined' onChange={(e)=>{changePaid(e.target.value)}}/>
       
-      <TextField fullWidth label="Last Name " id="Paid" margin='normal'  type='text' variant='outlined' onChange={(e)=>{changeDueDate(e.target.value)}}/>
-      <TextField fullWidth label="AppartmentNumber" id="Paid" margin='normal' type='text' variant='outlined' onChange={(e)=>{changeAppartmentNumber(e.target.value)}}/>
-      <TextField fullWidth label="MonthlyBilling" id="Paid" margin='normal' type='text' variant='outlined' onChange={(e)=>{changeMonthlyBilling(e.target.value)}} />
-      <TextField fullWidth label="PaidDate " id="Paid" margin='normal'  type='text' variant='outlined' onChange={(e)=>{changePaidDate(e.target.value)}}/>
-      <span>is RentPaid <Checkbox  label= " isRentPaid " id='isRentPaid' onChange={(e)=>{isRentPaid(e.target.checked)}} /></span>
+      <TextField
+        id="datetime-local"
+        label="Payment Date"
+        type="date"
+        onChange={(e)=>{
+            changePaidDate(e.target.value)
+      }}
+        sx={{ width: 500 ,marginTop:"15px"}}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+      
       
     </Box>
    
@@ -186,27 +233,50 @@ return(
         fontFamily:"Times New Roman",
         fontWeight:"bold"
       },}}>
+        {alert ? <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert severity={severity}>{alertMessage}</Alert>
+            </Stack>:<></>}
         <DataGrid 
+       
         sx={{backgroundColor: 'rgba(240, 248, 255, 0.7)'}}
         rows={payment}
         getRowId={(row) => row.Id}
         columns ={columns}
         pageSize={10}
         rowsPerPageOptions={[5]}
-        checkboxSelection
+        
         editMode='row'
-        onEditRowsModelChange={EditRenter}
-        onRowEditCommit={UpdateData}
-        disableSelectionOnClick
+        // onEditRowsModelChange={EditRenter}
+        // onRowEditCommit={UpdateData}
+        disableSelectionOnClick={true}
+        onRowClick={selectRow}
+        
+        
+        
+        
+        // onSelectionModelChange={(ids) => {
+        //     const selectedIDs = new Set(ids);
+        //     const selectedRows = data.rows((row) =>
+        //       selectedIDs.has(row.id),
+        //     ); console.log(row)
+           
+  
+        //     setSelectedRows(selectedRows);
+        //   }}
+       
+        
         />
     </Box>
    
-    <Box sx={{ '& > :not(style)': { m: 3 } ,textAlign:"left"}}>
-      <Fab color="primary" aria-label="add" onClick={handleClickOpen}>
-        
-        <AddIcon />
+    {selectedRows && <Box sx={{ '& > :not(style)': { m: 3 } ,textAlign:"left",width:"20px"}}  disabled={disableButton}>
+      <Fab color="primary"  aria-label="add" onClick={handleClickOpen} size="large" variant='extended'>
+         payment
+        <PaidRoundedIcon />
       </Fab>
     </Box>
+    
+}
+
    
     </div>
     
