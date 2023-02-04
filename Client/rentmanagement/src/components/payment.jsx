@@ -3,7 +3,7 @@ import axios from 'axios';
 import Box from '@mui/material/Box'
 import {DataGrid,GridColDef,GridValueGetterParams, useGridApiRef}  from '@mui/x-data-grid'
 import './payment.css'
-import {insertRenter,updateRenter} from "../components/Appartments/service"
+import {insertRenter,insertPayment} from "../components/Appartments/service"
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -119,13 +119,21 @@ setFormDataEdit(model)
       */
      }
      const data =(prev)=>{
-        console.log(selectedRows)
-        console.log(formData)
+      
+        
 
         if(formData?.Paid && formData.PaidDate){
+            selectedRows["PaidAmount"]=formData?.Paid
+            selectedRows["PaidDate"]=formData?.PaidDate
             setSevirity("success")
             setAlertMessage("your payment has been added succefully")
             setAlert(true)
+            console.log(selectedRows)
+            insertPayment(selectedRows)
+            setPaid(null)
+            setPaidDate(null)
+
+        
         }else {
             setSevirity("error")
             setAlertMessage("you have to insert payment amount and payment date")
@@ -234,7 +242,7 @@ return(
         fontWeight:"bold"
       },}}>
         {alert ? <Stack sx={{ width: '100%' }} spacing={2}>
-            <Alert severity={severity}>{alertMessage}</Alert>
+            <Alert variant='filled' severity={severity}>{alertMessage}</Alert>
             </Stack>:<></>}
         <DataGrid 
        

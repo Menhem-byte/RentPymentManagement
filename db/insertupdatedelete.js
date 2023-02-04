@@ -54,9 +54,10 @@ async function update(tableName,columnName,data){
             {   
                 console.log('Update fail with the record id: ' + Id + '\n'),
                 console.log(err)  
+                resolve(400) 
             }
         })
-        resolve("one record is updated"+Id)
+        resolve(200)
     })
 }
 

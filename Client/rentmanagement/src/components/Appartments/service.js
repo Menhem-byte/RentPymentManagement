@@ -62,3 +62,15 @@ export  const updateRenter = async(data) =>{
       console.log(error)
   }
 }
+
+export  const insertPayment = async(data) =>{
+console.log(data)
+  try{
+  const resp= await axios.post(`${APIURL}/payment/payment`,{data})
+    
+    console.log(resp)
+  }
+  catch(error){
+      console.log(error)
+  }
+}

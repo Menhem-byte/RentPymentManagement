@@ -40,10 +40,39 @@ const convertDate=(date)=>{
 return date
 }
 
+async function makePayment(data){
 
+    let reqdata={}
+reqdata["Id"]=data?.Id
+    reqdata["PaidDate"]=data?.PaidDate
+    reqdata["Paid"]=Number(data?.PaidAmount)
+    if(reqdata?.Paid === data?.MonthlyBilling){
+        console.log("inside if")
+        reqdata['TotalPaid']=Number(data?.PaidAmount)
+        reqdata["Rest"]=0
+        reqdata["RentPaid"]=true;
+    }
+    else{
+        reqdata['TotalPaid']=Number(data?.PaidAmount)
+        reqdata["Rest"]=data?.MonthlyBilling - data?.PaidAmount
+        reqdata["RentPaid"]=false;
+    }
+   
+console.log(reqdata)
+
+    let paymentUpdated=await insertupdatedelete.update("RentBilling","Id",reqdata)
+if(paymentUpdated===200){
+    return 200;
+}
+else{
+    return 400
+}
+
+}
 
 
 
 module.exports={
-    payment:payment
+    payment:payment,
+    makePayment:makePayment
 }

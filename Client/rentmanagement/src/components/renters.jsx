@@ -105,6 +105,7 @@ setFormDataEdit(model)
       
        
        insertRenter(formData)
+       
        /*
         insertAppartmentRenter(formData)
         .then((result)=>{

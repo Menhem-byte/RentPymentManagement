@@ -83,6 +83,7 @@ const data =(prev)=>{
    console.log(formData)
    
    insertAppartmentRenter(formData)
+   getAllData()
    setDisabled(true)
   /*
    insertAppartmentRenter(formData)

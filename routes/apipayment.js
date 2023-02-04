@@ -33,4 +33,26 @@ router.route("/payment").get(async(req,res)=>{
    
 })
 
+router.route("/payment").post(async(req,res)=>{
+    let paid=  (req.body)
+    console.log(paid)
+try {
+
+    if(paid){
+        let result=await dbpayment.makePayment(paid.data)
+        if(result===200){
+            res.sendStatus(200) 
+        }
+       
+    }
+  
+    
+   
+    
+} catch (error) {
+    
+} 
+
+})
+
 module.exports=router
